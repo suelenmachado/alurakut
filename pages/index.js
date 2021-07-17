@@ -1,4 +1,6 @@
 import React from 'react';
+import nookies from 'nookies';
+import jwt from 'jsonwebtoken';
 import styled from 'styled-components'
 import MainGrid from '../src/components/Maingrid/index'
 import Box from '../src/components/Box'
@@ -42,8 +44,8 @@ function ProfileRelationsBox(propriedades) {
   )
 }
 
-export default function Home() {
-  const usuarioAleatorio = 'suelenmachado';
+export default function Home(props) {
+  const usuarioAleatorio = 'props.githubUser';
   const [comunidades, setComunidades] = React.useState([]);
   //const comunidades = comunidades[0];
   //const alteradorDeComunidades/setComunidades = comnidades[1];
@@ -72,7 +74,7 @@ export default function Home() {
     fetch('https://graphql.datocms.com/', {
       method: 'POST',
       headers: {
-        'Authorization': '900792e3ab8736f7e822fa882f5625',
+        'Authorization': '7dcc51c40eef0fe4ca8a9154d50ebd',
         'Content-Type': 'application/json',
         'Accept': 'application/json',
       },
@@ -207,5 +209,31 @@ export default function Home() {
     </>
   )
 }
+
+  export async function getServerSideProps(context){
+    const cookies = nookies.get(context)
+    const token = cookies.USER_TOKEN;
+    const { githubUser } = jwt.decode(token);
+    const{ isAuthenticated } = await fetch('https://alurakut.vercel.app/api/auth',{
+      headers : {
+        Authorization: token
+      }
+    })
+    .then((resposta) => resposta.json())
+    
+    if (!isAuthenticated){
+      return{
+        redirect: {
+          destination: '/login',
+          permanent: false,
+        }
+      }
+    }
+    return {
+      props: {
+        githubUser
+      }, //will be passed to the page component as props
+    }
+  }
 
 

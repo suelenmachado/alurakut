@@ -13,7 +13,7 @@ const GlobalStyle = createGlobalStyle`
     padding: 0;
     box-sizing: border-box;
     font-family: sans-serif;
-    background-color: #D9E6F6;
+    background-color: #E3BDD4;
   }
 
   #___next {

@@ -54,7 +54,7 @@ export function AlurakutMenu({ githubUser }) {
 }
 AlurakutMenu.Wrapper = styled.header`
   width: 100%;
-  background-color: #308BC5;
+  background-color: #C01C73;
   .alurakutMenuProfileSidebar {
     background: white;
     position: fixed;
@@ -80,7 +80,7 @@ AlurakutMenu.Wrapper = styled.header`
     }
     .boxLink {
       font-size: 18px;
-      color: #2E7BB4;
+      color: #C01C73;
       -webkit-text-decoration: none;
       text-decoration: none;
       font-weight: 800;
@@ -89,11 +89,11 @@ AlurakutMenu.Wrapper = styled.header`
       margin-top: 12px;
       margin-bottom: 8px;
       border-color: transparent;
-      border-bottom-color: #ECF2FA;
+      border-bottom-color: #F2E4E3;
     }
   }
   .container {
-    background-color: #308BC5;
+    background-color: #C01C73;
     padding: 7px 16px;
     max-width: 1110px;
     margin: auto;
@@ -126,7 +126,7 @@ AlurakutMenu.Wrapper = styled.header`
         text-decoration: none;
         &:after {
           content: " ";
-          background-color: #5292C1;
+          background-color: #E390C6;
           display: block;
           position: absolute;
           width: 1px;
@@ -139,8 +139,8 @@ AlurakutMenu.Wrapper = styled.header`
       }
     }
     input {
-      color: #ffffff;
-      background: #5579A1;
+      color: #f2e4E3;
+      background: #E390C6;
       padding: 10px 42px;
       border: 0;
       background-image: url(${`${BASE_URL}/icons/search.svg`});
@@ -222,7 +222,7 @@ export function AlurakutProfileSidebarMenuDefault() {
 AlurakutProfileSidebarMenuDefault.Wrapper = styled.div`
   a {
     font-size: 12px;
-    color: #2E7BB4;
+    color: #CA519E;
     margin-bottom: 16px;
     display: flex;
     align-items: center;
@@ -290,7 +290,7 @@ OrkutNostalgicIconSet.List = styled.ul`
   flex-wrap: wrap;
   li {
     font-size: 12px;
-    color: #5A5A5A;
+    color: #E390C6;
     display: grid;
     grid-template-areas:
       "title title"
@@ -320,18 +320,18 @@ OrkutNostalgicIconSet.List = styled.ul`
 // ================================================================================================================
 const AlurakutLoginScreen = css`
   :root {
-    --backgroundPrimary: #D9E6F6;
-    --backgroundSecondary: #F1F9FE;
+    --backgroundPrimary: #CA519E;
+    --backgroundSecondary: #FFFFFF;
     --backgroundTertiary: #FFFFFF;
-    --backgroundQuarternary: #BBCDE8;
-    --colorPrimary: #2E7BB4;
-    --colorSecondary: #388BB0;
-    --colorTertiary: #2F4A71;
-    --colorQuarternary: #D81D99;
-    --textPrimaryColor: #333333;
-    --textSecondaryColor: #FFFFFF;
-    --textTertiaryColor: #5A5A5A;
-    --textQuarternaryColor: #C5C6CA;
+    --backgroundQuarternary: #E390C6;
+    --colorPrimary: #CA519E;
+    --colorSecondary: #E390C6;
+    --colorTertiary: #E3BDD4;
+    --colorQuarternary: #CA519E;
+    --textPrimaryColor: #CA519E;
+    --textSecondaryColor:#F2E4E3;
+    --textTertiaryColor: #E3090C6;
+    --textQuarternaryColor: #F2E4E3;
     --commonRadius: 8px;
   }
   .loginScreen {
@@ -442,6 +442,7 @@ const AlurakutLoginScreen = css`
       border-radius: var(--commonRadius);
       padding: 8px;
       p {
+        color: var(--colorPrimary);
         font-size: 12px;
         text-align: center;
         a {
@@ -461,14 +462,14 @@ export const AlurakutStyles = css`
     width: 8px;
   }
   *::-webkit-scrollbar-track {
-    background: #f1f1f1; 
+    background: #CA519E; 
   }
   *::-webkit-scrollbar-thumb {
-    background: #888; 
+    background: #E3BDD4; 
     border-radius: 10px;
   }
   *::-webkit-scrollbar-thumb:hover {
-    background: #555; 
+    background: #F2E4E3; 
   }
   a,
   button {

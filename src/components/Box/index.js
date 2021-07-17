@@ -1,14 +1,14 @@
 import styled from 'styled-components';
 
 const Box = styled.div`
-    background: #ffffff;
+    background: #F2E4E3;
     border-radius: 8px;
     padding: 16px;
 
     margin-bottom: 10px;
     .boxLink {
         font-size: 14px;
-        color: #2E7BB4;
+        color: #C01C73;
         text-decoration: none;
         font-weight: 800;
     }
@@ -21,8 +21,14 @@ const Box = styled.div`
         margin-bottom: 20px;
         font-size: 16px;
         font-weight: 700;
-        color: #333333;
+        color: #CA519E;
         margin-bottom: 20px;
+    }
+    h1 {
+        color: #CA519E;
+    }
+    h2 {
+        color: #CA519E;
     }
     hr {
         margin-top: 12px;
@@ -33,22 +39,22 @@ const Box = styled.div`
     input{
         width: 100%;
         background-color: #F4F4F4;
-        color: #333333;
+        color: #CA519E;
         border: 0;
         padding: 14px 16px;
         margin-bottom: 14px;
         border radius: 10000px;
         ::placeholder{
-            color: #333333;
+            color: #CA519E;
             opacity: 1;
     }
     }
     button{
         border: 0;
         padding: 8px 12px;
-        color: #FFFFFF;
+        color: #F2E4E3;
         border-radius: 10000px;
-        background-color: #6F92BB;
+        background-color: #C01C73;
     }
 
 `;
