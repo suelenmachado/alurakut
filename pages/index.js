@@ -5,7 +5,6 @@ import Box from '../src/components/Box'
 import { AlurakutMenu, AlurakutProfileSidebarMenuDefault, OrkutNostalgicIconSet } from '../src/lib/AlurakutCommons';
 import { ProfileRelationsBoxWrapper } from '../src/components/ProfileRelations';
 
-
 function ProfileSidebar(propriedades) {
   console.log(propriedades);
   return (
@@ -27,28 +26,25 @@ function ProfileSidebar(propriedades) {
   )
 }
 
-function ProfileRelationsBox(propriedades){
-  return(
+function ProfileRelationsBox(propriedades) {
+  return (
     <ProfileRelationsBoxWrapper>
       <h2 className="smallTitle">
-      {propriedades.title} ({propriedades.items.length})
+        {propriedades.title} ({propriedades.items.length})
       </h2>
       <ul>
 
       </ul>
-      </ProfileRelationsBoxWrapper>
+    </ProfileRelationsBoxWrapper>
 
-      
+
 
   )
 }
 
 export default function Home() {
-  const [comunidades, setComunidades] = React.useState([{
-    id: '1214645425451',
-    title: 'Eu odeio acordar cedo',
-    image: 'https://alurakut.vercel.app/capa-comunidade-01.jpg'
-  }]);
+  const usuarioAleatorio = 'suelenmachado';
+  const [comunidades, setComunidades] = React.useState([]);
   //const comunidades = comunidades[0];
   //const alteradorDeComunidades/setComunidades = comnidades[1];
   const githubUser = "suelenmachado";
@@ -58,24 +54,47 @@ export default function Home() {
     'juunegreiros',
     'rafaballerini',
     'omariosouto',
-    'peas',    
+    'peas',
     'marcobrunodev',
     'felipefialho'
   ]
-  
-   const [seguidores, setSeguidores] = React.useState([]);
-   React.useEffect(function(){
-      fetch('https://api.github.com/users/peas/followers')
+
+  const [seguidores, setSeguidores] = React.useState([]);
+  React.useEffect(function () {
+    fetch('https://api.github.com/users/suelenmachado/followers')
       .then(function (respostaDoServidor) {
-      return respostaDoServidor.json();
+        return respostaDoServidor.json();
+      })
+      .then(function (respostaCompleta) {
+        setSeguidores(respostaCompleta);
+      })
+    console.log('seguidores antes do return', seguidores);
+    fetch('https://graphql.datocms.com/', {
+      method: 'POST',
+      headers: {
+        'Authorization': '900792e3ab8736f7e822fa882f5625',
+        'Content-Type': 'application/json',
+        'Accept': 'application/json',
+      },
+      body: JSON.stringify({
+        "query": `query {
+        allCommunities {
+              title
+              id
+              imageUrl
+              creatorSlug
+        }
+      }`})
     })
-    .then(function(respostaCompleta){
-      setSeguidores(respostaCompleta);
-    })
+      .then((response) => response.json()) // pego o retorno e retorna
+      .then((respostaCompleta) => {
+        const comunidadesVindasDoDato = respostaCompleta.data.allCommunities;
+        console.log(comunidadesVindasDoDato)
+        setComunidades(comunidadesVindasDoDato)
 
+      })
   }, [])
-
-    console.log('seguidores antes do return', seguidores)
+  console.log('seguidores antes do return', seguidores)
 
   return (
     <>
@@ -104,15 +123,27 @@ export default function Home() {
 
               console.log('Campo: ', dadosDoForm.get('title'));
               console.log('Campo: ', dadosDoForm.get('image'));
-              
+
               const comunidade = {
-                id: new Date().toISOString(),
-               title: dadosDoForm.get('title'),
-               image: dadosDoForm.get('image'),
-             }
-              const comunidadesAtualizadas = [...comunidades, comunidade];
-              setComunidades(comunidadesAtualizadas)
-              
+                title: dadosDoForm.get('title'),
+                imageUrl: dadosDoForm.get('image'),
+                creatorSlug: usuarioAleatorio,
+              }
+              fetch('/api/comunidades', {
+                method: 'POST',
+                headers: {
+                  'Content-Type': 'application/jason',
+                },
+                body: JSON.stringify(comunidade)
+              })
+                .then(async (response) => {
+                  const dados = await response.json();
+                  console.log(dados.regristroCriado);
+                  const comunidade = dados.regristroCriado;
+                  const comunidadesAtualizadas = [...comunidades, comunidade];
+                  setComunidades(comunidadesAtualizadas)
+                })
+
             }}>
               <div>
                 <input placeholder="Qual vai ser o nome da sua comunidade?" name="title"
@@ -133,27 +164,31 @@ export default function Home() {
           </Box>
         </div>
         <div div className="profileRelationsArea" style={{ gridArea: " profileRelationsArea " }}>
-          <ProfileRelationsBox title="Seguidores" items= {seguidores}/>
+          <ProfileRelationsBox title="Seguidores" items={seguidores} />
           <ProfileRelationsBoxWrapper>
+            <h2 className='smallTitle'>
+              Comunidades({comunidades.length})
+
+            </h2>
             <ul>
               {comunidades.map((itemAtual) => {
                 return (
                   <li key={itemAtual.id}>
-                    <a href={`/users/${itemAtual.title}`}>
-                      <img src={itemAtual.image} /> 
+                    <a href={`/communities/${itemAtual.id}`}>
+                      <img src={itemAtual.imageUrl} />
                       <span>{itemAtual.title}</span>
                     </a>
                   </li>
                 )
               })}
-            </ul>  
+            </ul>
           </ProfileRelationsBoxWrapper>
           <ProfileRelationsBoxWrapper>
             <h2 className='smallTitle'>
-                Pessoas da Comunidade ({pessoasFavoritas.length})
+              Amigos ({pessoasFavoritas.length})
             </h2>
-            <ul>
-            {pessoasFavoritas.map((itemAtual) => {
+                        <ul>
+              {pessoasFavoritas.map((itemAtual) => {
                 return (
                   <li key={itemAtual}>
                     <a href={`/users/${itemAtual}`} >
@@ -163,12 +198,14 @@ export default function Home() {
                   </li>
                 )
               })}
-            </ul> 
+            </ul>
 
           </ProfileRelationsBoxWrapper>
-          
+
         </div>
       </MainGrid>
     </>
   )
 }
+
+
